@@ -11,19 +11,40 @@ public class Tank : MonoBehaviour
     public float previousAngle;
     public float previousPower;
 
-/*    public void MoveLeft()
+    public AudioClip shootSound;
+    public GameObject projectile;
+
+    private AudioSource source;
+
+    public void MoveLeft()
     {
-        this.transform.position -= new Vector3(0.01f, 0, 0);
+        this.transform.position -= new Vector3(1f, 0, 0);
     }
 
     public void MoveRight()
     {
-        this.transform.position += new Vector3(0.01f, 0, 0);
-    }*/
+        this.transform.position += new Vector3(1f, 0, 0);
+    }
 
     public void AdjustTowerAngle(float degree)
     {
         tankTowerPrefab.transform.transform.localRotation = Quaternion.Euler(degree, 0, 0);
     }
- 
+
+    public void FireProjectile()
+    {
+        float vol = 10;
+        source = GetComponent<AudioSource>();
+        source.PlayOneShot(shootSound, vol);
+    }
+
+    //Add to bullet script
+    /*    void OnCollisionEnter(Collision col)
+        {
+            if (col.gameObject.tag == "terrain")
+            {
+                Destroy(col.gameObject);
+                Destroy(this.gameObject);
+            }
+        }*/
 }

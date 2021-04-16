@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
@@ -20,10 +21,14 @@ public class GameController : MonoBehaviour
     public Button buttonRight;
     public Button fireButton;
 
-    public int counter = 0;
+    public AudioClip gameOverSound;
+    private AudioSource source;
 
     void Start()
     {
+        source = GetComponent<AudioSource>();
+
+        GenerateTerrain();
         //Initialization
         tankleft.previousAngle = 0;
         tankRight.previousAngle = 0;
@@ -39,19 +44,18 @@ public class GameController : MonoBehaviour
         fireButton.onClick.AddListener(Fire);
         buttonLeft.onClick.AddListener(MoveLeft);
         buttonRight.onClick.AddListener(MoveRight);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        TankControl();
         //update the angle of the tank tower
         tankList[activeTankIndex].AdjustTowerAngle(angleSlider.value);
 
-        //keep checking to see if 
-        if (tankList[(activeTankIndex == 0 ? 1 : 0)].health == 0)
-        {
-            Debug.Log("Winner is: " + tankList[activeTankIndex].name);
-        }
+        //keep checking to see if any tank's health reaches 0
+        CheckWinner();
     }
 
     void Fire()
@@ -62,6 +66,8 @@ public class GameController : MonoBehaviour
         Debug.Log("Power: " + powerSlider.value);
         tankList[activeTankIndex].previousAngle = angleSlider.value;
         tankList[activeTankIndex].previousPower = powerSlider.value;
+        tankList[activeTankIndex].FireProjectile();
+
         //2. Check triggers for hovering power ups and hits
 
 
@@ -72,15 +78,57 @@ public class GameController : MonoBehaviour
         powerSlider.value = tankList[activeTankIndex].previousPower;
     }
 
+    //Modify this part to be event
     public void MoveLeft()
     {
         Debug.Log("Move left");
-        tankList[activeTankIndex].transform.position -= new Vector3(1f, 0, 0);
+        tankList[activeTankIndex].MoveLeft();
     }
 
     public void MoveRight()
     {
         Debug.Log("Move right");
-        tankList[activeTankIndex].transform.position += new Vector3(1f, 0, 0);
+        tankList[activeTankIndex].MoveRight();
     }
+
+    public void TankControl()
+    {
+        //Add control for keyboard
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey("a"))
+        {
+            tankList[activeTankIndex].transform.position -= new Vector3(5, 0, 0) * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey("d"))
+        {
+            tankList[activeTankIndex].transform.position += new Vector3(5, 0, 0) * Time.deltaTime;
+        }
+    }
+
+    public void GenerateTerrain()
+    {
+        //Generate destrutable 'terrain' made of cubes randomly
+        for (int i = -35; i < 35; i++)
+        {
+            for (int j = 0; j < Random.Range(0, 15); j++)
+            {
+                GameObject terrainCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Rigidbody terrainCubeRb = terrainCube.AddComponent<Rigidbody>();
+                BoxCollider terrainCubeCollider = terrainCube.AddComponent<BoxCollider>();
+                terrainCube.tag = "terrain";
+                terrainCube.transform.position = new Vector3(i, j, 0);
+                terrainCube.GetComponent<Renderer>().material.color = Color.red;
+            }
+        }
+    }
+
+    public void CheckWinner()
+    {
+        if (tankList[(activeTankIndex == 0 ? 1 : 0)].health == 0)
+        {
+            Debug.Log("Winner is: " + tankList[activeTankIndex].name);
+            source.PlayOneShot(gameOverSound, 10);
+        }
+    }
+
+
 }
