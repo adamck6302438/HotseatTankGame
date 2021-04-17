@@ -29,11 +29,17 @@ public class GameController : MonoBehaviour
         source = GetComponent<AudioSource>();
 
         GenerateTerrain();
+
         //Initialization
-        tankleft.previousAngle = 0;
-        tankRight.previousAngle = 0;
-        tankleft.previousPower = 0;
-        tankRight.previousPower = 0;
+        powerSlider.value = 0.4f;
+        angleSlider.value = 40;
+
+        tankleft.angle = angleSlider.value;
+        tankleft.power = powerSlider.value;
+
+        tankRight.angle = angleSlider.value;
+        tankRight.power = powerSlider.value;
+
         tankList.Add(tankleft);
         tankList.Add(tankRight);
         activeTankIndex = 0;
@@ -52,7 +58,7 @@ public class GameController : MonoBehaviour
     {
         TankControl();
         //update the angle of the tank tower
-        tankList[activeTankIndex].AdjustTowerAngle(angleSlider.value);
+        tankList[activeTankIndex].AdjustTowerAngle(-angleSlider.value);
 
         //keep checking to see if any tank's health reaches 0
         CheckWinner();
@@ -64,18 +70,18 @@ public class GameController : MonoBehaviour
         Debug.Log("Fire");
         Debug.Log("Angle: " + angleSlider.value);
         Debug.Log("Power: " + powerSlider.value);
-        tankList[activeTankIndex].previousAngle = angleSlider.value;
-        tankList[activeTankIndex].previousPower = powerSlider.value;
+        tankList[activeTankIndex].angle = angleSlider.value;
+        tankList[activeTankIndex].power = powerSlider.value;
         tankList[activeTankIndex].FireProjectile();
 
         //2. Check triggers for hovering power ups and hits
 
 
         //3. Switch player and check if any player reaches 0 health
-        activeTankIndex = (activeTankIndex == 0 ? 1 : 0);
+        activeTankIndex = (activeTankIndex + 1) % 2;
         Debug.Log("Current Player: " + tankList[activeTankIndex].name);
-        angleSlider.value = tankList[activeTankIndex].previousAngle;
-        powerSlider.value = tankList[activeTankIndex].previousPower;
+        angleSlider.value = tankList[activeTankIndex].angle;
+        powerSlider.value = tankList[activeTankIndex].power;
     }
 
     //Modify this part to be event

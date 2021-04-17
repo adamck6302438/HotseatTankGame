@@ -19,6 +19,6 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.localScale = new Vector3(healthSize, 1, 1);
+        this.transform.localScale = new Vector3(tank.GetComponent<Tank>().health, 1, 1);
     }
 }
