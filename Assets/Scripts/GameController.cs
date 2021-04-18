@@ -21,6 +21,9 @@ public class GameController : MonoBehaviour
     public Button buttonRight;
     public Button fireButton;
 
+    public GameObject platformLeft;
+    public GameObject platformRight;
+
     public AudioClip gameOverSound;
     private AudioSource source;
 
@@ -66,7 +69,6 @@ public class GameController : MonoBehaviour
 
     void Fire()
     {
-        //1. Pass the angle and power into calculation of projectile
         Debug.Log("Fire");
         Debug.Log("Angle: " + angleSlider.value);
         Debug.Log("Power: " + powerSlider.value);
@@ -74,10 +76,6 @@ public class GameController : MonoBehaviour
         tankList[activeTankIndex].power = powerSlider.value;
         tankList[activeTankIndex].FireProjectile();
 
-        //2. Check triggers for hovering power ups and hits
-
-
-        //3. Switch player and check if any player reaches 0 health
         activeTankIndex = (activeTankIndex + 1) % 2;
         Debug.Log("Current Player: " + tankList[activeTankIndex].name);
         angleSlider.value = tankList[activeTankIndex].angle;
@@ -112,13 +110,26 @@ public class GameController : MonoBehaviour
 
     public void GenerateTerrain()
     {
+        //Generate platform for tanks with random heights
+        platformLeft.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
+        platformRight.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
+        Debug.Log(platformLeft.transform.localScale.y);
+        Debug.Log(platformRight.transform.localScale.y);
+        tankleft.transform.position = new Vector3(-38, platformLeft.transform.localScale.y*2+0.8f, 0);
+        tankleft.GetComponent<Rigidbody>().isKinematic = true;
+        tankleft.GetComponent<Rigidbody>().drag = 1000;
+        tankRight.transform.position = new Vector3(38, platformRight.transform.localScale.y*2+0.8f, 0);
+        tankRight.GetComponent<Rigidbody>().isKinematic = true;
+        tankRight.GetComponent<Rigidbody>().drag = 1000;
         //Generate destrutable 'terrain' made of cubes randomly
         for (int i = -35; i < 35; i++)
         {
-            for (int j = 0; j < Random.Range(0, 15); j++)
+            for (int j = 0; j < Random.Range(0, 30); j++)
             {
                 GameObject terrainCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 Rigidbody terrainCubeRb = terrainCube.AddComponent<Rigidbody>();
+                terrainCubeRb.drag = 1000;
+                terrainCubeRb.isKinematic = true;
                 BoxCollider terrainCubeCollider = terrainCube.AddComponent<BoxCollider>();
                 terrainCube.tag = "terrain";
                 terrainCube.transform.position = new Vector3(i, j, 0);
