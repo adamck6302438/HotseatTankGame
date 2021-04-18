@@ -32,7 +32,8 @@ public class GameController : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
 
-        GenerateTerrain();
+        GeneratePlatforms();
+        GenerateDestructibleTerrain();
 
         //Initialization
         powerSlider.value = 0.4f;
@@ -87,22 +88,20 @@ public class GameController : MonoBehaviour
         powerSlider.value = tankList[activeTankIndex].power;
     }
 
-    public void GenerateTerrain()
+    public void GeneratePlatforms()
     {
         //Generate platform for tanks with random heights
         platformLeft.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
         platformRight.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
         Debug.Log("Platform Left Height: " + platformLeft.transform.localScale.y);
         Debug.Log("Platform Right Height: " + platformRight.transform.localScale.y);
-
+        
         tankleft.transform.position = new Vector3(-38, platformLeft.transform.localScale.y*2+0.8f, 0);
-        tankleft.GetComponent<Rigidbody>().isKinematic = true;
-        tankleft.GetComponent<Rigidbody>().drag = 1000;
+        tankRight.transform.position = new Vector3(38, platformRight.transform.localScale.y*2+0.8f, 0);       
+    }
 
-        tankRight.transform.position = new Vector3(38, platformRight.transform.localScale.y*2+0.8f, 0);
-        tankRight.GetComponent<Rigidbody>().isKinematic = true;
-        tankRight.GetComponent<Rigidbody>().drag = 1000;
-
+    public void GenerateDestructibleTerrain()
+    {
         //Generate destrutable 'terrain' made of cubes randomly
         for (int i = -35; i < 35; i++)
         {
@@ -118,11 +117,14 @@ public class GameController : MonoBehaviour
 
     public void CheckWinner()
     {
-        if (tankList[(activeTankIndex == 0 ? 1 : 0)].health == 0)
+        for (int i = 0; i < tankList.Count; i++)
         {
-            Debug.Log("Winner is: " + tankList[activeTankIndex].name);
-            winner = tankList[activeTankIndex].name;
-            SceneManager.LoadScene("EndScene");
+            if (tankList[i].health == 0)
+            {
+                winner = tankList[(i + 1) % 2].name;
+                Debug.Log("Winner is: " + tankList[activeTankIndex].name);
+                SceneManager.LoadScene("EndScene");
+            }
         }
     }
 

@@ -12,7 +12,6 @@ public class Missile : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(GetComponent<Rigidbody>().velocity);
     }
 
-    //Add to bullet script
     void OnCollisionEnter(Collision col)
     {
         Debug.Log("Collision Enter: " + name + " with " + col.gameObject.tag);

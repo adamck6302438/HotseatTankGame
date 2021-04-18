@@ -52,7 +52,9 @@ public class Tank : MonoBehaviour
             source = GetComponent<AudioSource>();
             source.PlayOneShot(shootSound, vol);
 
-            GameObject shootMissile = Instantiate(projectile, tankTowerPrefab.transform.transform.position + new Vector3(0, 0.4f, 0), tankTowerPrefab.transform.transform.rotation);
+            GameObject shootMissile = Instantiate(projectile, 
+                tankTowerPrefab.transform.transform.position + new Vector3(0, 0.4f, 0), 
+                tankTowerPrefab.transform.transform.rotation);
             shootMissile.GetComponent<Missile>().firedBy = this;
             shootMissile.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, power * 2000));
         }
