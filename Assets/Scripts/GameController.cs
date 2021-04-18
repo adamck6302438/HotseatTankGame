@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class GameController : MonoBehaviour
 
     public static List<Tank> tankList = new List<Tank>();
 
-    public Button buttonLeft;
-    public Button buttonRight;
     public Button fireButton;
 
     public GameObject platformLeft;
@@ -26,6 +25,8 @@ public class GameController : MonoBehaviour
 
     public AudioClip gameOverSound;
     private AudioSource source;
+
+    public static string winner;
 
     void Start()
     {
@@ -51,15 +52,11 @@ public class GameController : MonoBehaviour
         tankleft.name = "Player Left";
         tankRight.name = "Player Right";
         fireButton.onClick.AddListener(Fire);
-        //buttonLeft.onClick.AddListener(MoveLeft);
-        //buttonRight.onClick.AddListener(MoveRight);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //TankControl();
         //update the angle of the tank tower
         tankList[activeTankIndex].AdjustTowerAngle(-angleSlider.value);
 
@@ -81,19 +78,6 @@ public class GameController : MonoBehaviour
         angleSlider.value = tankList[activeTankIndex].angle;
         powerSlider.value = tankList[activeTankIndex].power;
     }
-
-    //Modify this part to be event
-    /*public void MoveLeft()
-    {
-        Debug.Log("Move left");
-        tankList[activeTankIndex].MoveLeft();
-    }*/
-
-    /*public void MoveRight()
-    {
-        Debug.Log("Move right");
-        tankList[activeTankIndex].MoveRight();
-    }*/
 
     public void TankControl()
     {
@@ -143,9 +127,9 @@ public class GameController : MonoBehaviour
         if (tankList[(activeTankIndex == 0 ? 1 : 0)].health == 0)
         {
             Debug.Log("Winner is: " + tankList[activeTankIndex].name);
-            source.PlayOneShot(gameOverSound, 10);
+            winner = tankList[activeTankIndex].name;
+            SceneManager.LoadScene("EndScene");
         }
     }
-
 
 }
