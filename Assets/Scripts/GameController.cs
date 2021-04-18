@@ -51,8 +51,8 @@ public class GameController : MonoBehaviour
         tankleft.name = "Player Left";
         tankRight.name = "Player Right";
         fireButton.onClick.AddListener(Fire);
-        buttonLeft.onClick.AddListener(MoveLeft);
-        buttonRight.onClick.AddListener(MoveRight);
+        //buttonLeft.onClick.AddListener(MoveLeft);
+        //buttonRight.onClick.AddListener(MoveRight);
 
     }
 
