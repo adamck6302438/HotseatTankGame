@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 8745894533035268738}
   - component: {fileID: 8745894533035268737}
   - component: {fileID: 8745894533035268736}
-  - component: {fileID: 8711678188741521178}
   m_Layer: 0
   m_Name: PowerUp-Atk
-  m_TagString: powerup
+  m_TagString: AtkPwrUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,17 +93,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8711678188741521178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8745894533035268751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77d4fb4646aeda49b427fdf80a4911a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerId: 2
-  powerVal: 0
