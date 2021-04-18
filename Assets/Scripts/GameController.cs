@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TankControl();
+        //TankControl();
         //update the angle of the tank tower
         tankList[activeTankIndex].AdjustTowerAngle(-angleSlider.value);
 
@@ -83,17 +83,17 @@ public class GameController : MonoBehaviour
     }
 
     //Modify this part to be event
-    public void MoveLeft()
+    /*public void MoveLeft()
     {
         Debug.Log("Move left");
         tankList[activeTankIndex].MoveLeft();
-    }
+    }*/
 
-    public void MoveRight()
+    /*public void MoveRight()
     {
         Debug.Log("Move right");
         tankList[activeTankIndex].MoveRight();
-    }
+    }*/
 
     public void TankControl()
     {
