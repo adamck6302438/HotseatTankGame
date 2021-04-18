@@ -79,19 +79,6 @@ public class GameController : MonoBehaviour
         powerSlider.value = tankList[activeTankIndex].power;
     }
 
-    public void TankControl()
-    {
-        //Add control for keyboard
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey("a"))
-        {
-            tankList[activeTankIndex].transform.position -= new Vector3(5, 0, 0) * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey("d"))
-        {
-            tankList[activeTankIndex].transform.position += new Vector3(5, 0, 0) * Time.deltaTime;
-        }
-    }
-
     public void GenerateTerrain()
     {
         //Generate platform for tanks with random heights

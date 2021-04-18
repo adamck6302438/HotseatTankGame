@@ -26,6 +26,9 @@ public class Missile : MonoBehaviour
                 col.gameObject.GetComponent<Tank>().health--;
                 Destroy(gameObject);
                 break;
+            case "powerup":
+
+                break;
         }
     }
 }
