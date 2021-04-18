@@ -6,7 +6,7 @@ public class HealthBar : MonoBehaviour
 {
     //Fields
     public string tankColour; //colour of tank below healthBar
-    public float healthSize; //size of healthBar 
+    float healthSize; //size of healthBar 
     public GameObject tank; //GameObject of tank below the health bar
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
     {
         this.transform.position = new Vector3(
             tank.transform.position.x,
-            this.transform.position.y,
+            this.transform.position.y + 4,
             this.transform.position.z
             ); //healthbar moves with tank
 
