@@ -35,7 +35,7 @@ public class Missile : MonoBehaviour
                 break;
         }
 
-        Destroy(gameObject);
         gameCtrl.EndTurn();
+        Destroy(gameObject);
     }
 }

@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
     public AudioClip gameOverSound;
     private AudioSource source;
 
+    private bool firing = false;
+
     public static string winner;
 
     void Start()
@@ -68,18 +70,24 @@ public class GameController : MonoBehaviour
 
     void Fire()
     {
-        Debug.Log("Fire");
-        Debug.Log("Angle: " + angleSlider.value);
-        Debug.Log("Power: " + powerSlider.value);
+        if (!firing)
+        {
+            firing = true;
 
-        tankList[activeTankIndex].angle = angleSlider.value;
-        tankList[activeTankIndex].power = powerSlider.value;
+            Debug.Log("Fire");
+            Debug.Log("Angle: " + angleSlider.value);
+            Debug.Log("Power: " + powerSlider.value);
 
-        tankList[activeTankIndex].FireProjectile();
+            tankList[activeTankIndex].angle = angleSlider.value;
+            tankList[activeTankIndex].power = powerSlider.value;
+
+            tankList[activeTankIndex].FireProjectile();
+        }
     }
 
     public void EndTurn()
     {
+        firing = false;
         activeTankIndex = (activeTankIndex + 1) % 2;
         Debug.Log("Current Player: " + tankList[activeTankIndex].name);
         angleSlider.value = tankList[activeTankIndex].angle;
