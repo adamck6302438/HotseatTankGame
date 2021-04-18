@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
+    public Tank firedBy;
+
     // Update is called once per frame
     void Update()
     {
@@ -13,22 +15,30 @@ public class Missile : MonoBehaviour
     //Add to bullet script
     void OnCollisionEnter(Collision col)
     {
+        GameController gameCtrl = GameObject.Find("GameController").GetComponent<GameController>();
+
         switch (col.gameObject.tag)
         {
             case "terrain":
                 Destroy(col.gameObject);
-                Destroy(this.gameObject);
                 break;
-            case "floor":
-                Destroy(this.gameObject);
+            case "attackBoost":
+                Destroy(col.gameObject);
+                firedBy.PowerUp();
+                break;
+            case "healthBoost":
+                Destroy(col.gameObject);
+                firedBy.ResetToFullHealth();
                 break;
             case "tank":
-                col.gameObject.GetComponent<Tank>().health--;
-                Destroy(gameObject);
+                col.gameObject.GetComponent<Tank>().TakeDamage(firedBy.attack);
                 break;
             case "powerup":
 
                 break;
         }
+
+        Destroy(gameObject);
+        gameCtrl.EndTurn();
     }
 }

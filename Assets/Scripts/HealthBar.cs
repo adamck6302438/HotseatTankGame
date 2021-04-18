@@ -21,9 +21,10 @@ public class HealthBar : MonoBehaviour
     {
         this.transform.position = new Vector3(
             tank.transform.position.x,
-            tank.transform.position.y + 4,
+            this.transform.position.y,
             this.transform.position.z
-            ); //healthbar location depends on tank
-        this.transform.localScale = new Vector3(healthSize, 1, 1); //healthbar size adjusts to health of tank
+            ); //healthbar moves with tank
+
+        this.transform.localScale = new Vector3(tank.GetComponent<Tank>().health, 1, 1); //healthbar size adjusts to health of tank
     }
 }
