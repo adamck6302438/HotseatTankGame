@@ -40,9 +40,11 @@ public class GameController : MonoBehaviour
 
         tankleft.angle = angleSlider.value;
         tankleft.power = powerSlider.value;
+        tankleft.attack = 1;
 
         tankRight.angle = angleSlider.value;
         tankRight.power = powerSlider.value;
+        tankRight.attack = 1;
 
         tankList.Add(tankleft);
         tankList.Add(tankRight);
@@ -69,10 +71,15 @@ public class GameController : MonoBehaviour
         Debug.Log("Fire");
         Debug.Log("Angle: " + angleSlider.value);
         Debug.Log("Power: " + powerSlider.value);
+
         tankList[activeTankIndex].angle = angleSlider.value;
         tankList[activeTankIndex].power = powerSlider.value;
-        tankList[activeTankIndex].FireProjectile();
 
+        tankList[activeTankIndex].FireProjectile();
+    }
+
+    public void EndTurn()
+    {
         activeTankIndex = (activeTankIndex + 1) % 2;
         Debug.Log("Current Player: " + tankList[activeTankIndex].name);
         angleSlider.value = tankList[activeTankIndex].angle;
