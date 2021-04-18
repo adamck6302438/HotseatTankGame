@@ -6,14 +6,16 @@ public class HealthBar : MonoBehaviour
 {
     //Fields
     public string tankColour; //colour of tank below healthBar
-    public float healthSize; //size of healthBar 
-    public GameObject tank; //GameObject of tank below the health bar
+    float healthSize; //size of healthBar 
+    GameObject tank; //GameObject of tank below the health bar
 
     // Start is called before the first frame update
     void Start()
     {
         tank = GameObject.Find($"TankFree_{tankColour}"); //select tank object based on color
         healthSize = tank.GetComponent<Tank>().health; //size of healthbar is selected from the tank object chosen
+
+
     }
 
     // Update is called once per frame
