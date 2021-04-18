@@ -32,7 +32,8 @@ public class GameController : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
 
-        GenerateTerrain();
+        GeneratePlatforms();
+        GenerateDestructibleTerrain();
 
         //Initialization
         powerSlider.value = 0.4f;
@@ -40,17 +41,19 @@ public class GameController : MonoBehaviour
 
         tankleft.angle = angleSlider.value;
         tankleft.power = powerSlider.value;
+        tankleft.attack = 1;
 
         tankRight.angle = angleSlider.value;
         tankRight.power = powerSlider.value;
+        tankRight.attack = 1;
 
         tankList.Add(tankleft);
         tankList.Add(tankRight);
         activeTankIndex = 0;
 
         //UI hook up
-        tankleft.name = "Player Left";
-        tankRight.name = "Player Right";
+        tankleft.name = "Blue";
+        tankRight.name = "Green";
         fireButton.onClick.AddListener(Fire);
     }
 
@@ -66,55 +69,45 @@ public class GameController : MonoBehaviour
 
     void Fire()
     {
+        tankList[activeTankIndex].angle = angleSlider.value;
+        tankList[activeTankIndex].power = powerSlider.value;
+
         Debug.Log("Fire");
         Debug.Log("Angle: " + angleSlider.value);
         Debug.Log("Power: " + powerSlider.value);
-        tankList[activeTankIndex].angle = angleSlider.value;
-        tankList[activeTankIndex].power = powerSlider.value;
-        tankList[activeTankIndex].FireProjectile();
 
+        tankList[activeTankIndex].FireProjectile();
+    }
+
+    public void EndTurn()
+    {
         activeTankIndex = (activeTankIndex + 1) % 2;
         Debug.Log("Current Player: " + tankList[activeTankIndex].name);
+
         angleSlider.value = tankList[activeTankIndex].angle;
         powerSlider.value = tankList[activeTankIndex].power;
     }
 
-    public void TankControl()
-    {
-        //Add control for keyboard
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey("a"))
-        {
-            tankList[activeTankIndex].transform.position -= new Vector3(5, 0, 0) * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey("d"))
-        {
-            tankList[activeTankIndex].transform.position += new Vector3(5, 0, 0) * Time.deltaTime;
-        }
-    }
-
-    public void GenerateTerrain()
+    public void GeneratePlatforms()
     {
         //Generate platform for tanks with random heights
         platformLeft.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
         platformRight.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
-        Debug.Log(platformLeft.transform.localScale.y);
-        Debug.Log(platformRight.transform.localScale.y);
+        Debug.Log("Platform Left Height: " + platformLeft.transform.localScale.y);
+        Debug.Log("Platform Right Height: " + platformRight.transform.localScale.y);
+        
         tankleft.transform.position = new Vector3(-38, platformLeft.transform.localScale.y*2+0.8f, 0);
-        tankleft.GetComponent<Rigidbody>().isKinematic = true;
-        tankleft.GetComponent<Rigidbody>().drag = 1000;
-        tankRight.transform.position = new Vector3(38, platformRight.transform.localScale.y*2+0.8f, 0);
-        tankRight.GetComponent<Rigidbody>().isKinematic = true;
-        tankRight.GetComponent<Rigidbody>().drag = 1000;
+        tankRight.transform.position = new Vector3(38, platformRight.transform.localScale.y*2+0.8f, 0);       
+    }
+
+    public void GenerateDestructibleTerrain()
+    {
         //Generate destrutable 'terrain' made of cubes randomly
         for (int i = -35; i < 35; i++)
         {
             for (int j = 0; j < Random.Range(0, 30); j++)
             {
                 GameObject terrainCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Rigidbody terrainCubeRb = terrainCube.AddComponent<Rigidbody>();
-                terrainCubeRb.drag = 1000;
-                terrainCubeRb.isKinematic = true;
-                BoxCollider terrainCubeCollider = terrainCube.AddComponent<BoxCollider>();
                 terrainCube.tag = "terrain";
                 terrainCube.transform.position = new Vector3(i, j, 0);
                 terrainCube.GetComponent<Renderer>().material.color = Color.red;
@@ -124,11 +117,14 @@ public class GameController : MonoBehaviour
 
     public void CheckWinner()
     {
-        if (tankList[(activeTankIndex == 0 ? 1 : 0)].health == 0)
+        for (int i = 0; i < tankList.Count; i++)
         {
-            Debug.Log("Winner is: " + tankList[activeTankIndex].name);
-            winner = tankList[activeTankIndex].name;
-            SceneManager.LoadScene("EndScene");
+            if (tankList[i].health == 0)
+            {
+                winner = tankList[(i + 1) % 2].name;
+                Debug.Log("Winner is: " + tankList[activeTankIndex].name);
+                SceneManager.LoadScene("EndScene");
+            }
         }
     }
 
