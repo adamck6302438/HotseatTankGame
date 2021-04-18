@@ -449,6 +449,7 @@ MonoBehaviour:
   angle: 0
   power: 0
   attack: 0
+  isFiring: 0
   shootSound: {fileID: 8300000, guid: a6b9fe185a1239346a0cfd37c93aeee9, type: 3}
   projectile: {fileID: 1043275407203213167, guid: 3b19b63bf813b564d8c4b8953bec69a0,
     type: 3}
@@ -1129,6 +1130,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -20, y: 0, z: 0}
+--- !u!1 &491867723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8745894533035268751, guid: 4d545ca9611a1934b843f0b20509729b,
+    type: 3}
+  m_PrefabInstance: {fileID: 129161780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &491867728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491867723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77d4fb4646aeda49b427fdf80a4911a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &527013748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,6 +1537,7 @@ MonoBehaviour:
   angle: 0
   power: 0
   attack: 0
+  isFiring: 0
   shootSound: {fileID: 8300000, guid: e83bed595307f4e4e8248aa5c4e9f10c, type: 3}
   projectile: {fileID: 1043275407203213167, guid: 3b19b63bf813b564d8c4b8953bec69a0,
     type: 3}
@@ -2136,6 +2156,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1277884457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4197487741059474594, guid: 80e63f794fb50154792d4465f1cf4e84,
+    type: 3}
+  m_PrefabInstance: {fileID: 1150591594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1277884462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277884457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77d4fb4646aeda49b427fdf80a4911a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1343700122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,7 +2827,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3681543e5b0f59742b73073cb379cdc6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 3681543e5b0f59742b73073cb379cdc6, type: 3}
       propertyPath: m_LocalScale.z

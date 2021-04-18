@@ -40,7 +40,7 @@ public class Missile : MonoBehaviour
         }
 
         // reset attack power up after one turn
-        if (firedBy.attack > 1 && !col.gameObject.CompareTag("HpPwrUp"))
+        if (firedBy.attack > 1 && !col.gameObject.CompareTag("AtkPwrUp"))
         {
             firedBy.SetAttack(1);
         }
