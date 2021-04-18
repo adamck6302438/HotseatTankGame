@@ -25,6 +25,7 @@ public class HealthBar : MonoBehaviour
             this.transform.position.z
             ); //healthbar moves with tank
 
-        this.transform.localScale = new Vector3(tank.GetComponent<Tank>().health, 1, 1); //healthbar size adjusts to health of tank
+        healthSize = tank.GetComponent<Tank>().health;
+        this.transform.localScale = new Vector3(healthSize, 1, 1); //healthbar size adjusts to health of tank
     }
 }

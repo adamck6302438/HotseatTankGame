@@ -10,6 +10,8 @@ public class Tank : MonoBehaviour
     public float power;
     public int attack;
 
+    public bool isFiring;
+
     public AudioClip shootSound;
     public GameObject projectile;
 
@@ -22,13 +24,12 @@ public class Tank : MonoBehaviour
 
     public void AdjustTowerAngle(float degree)
     {
-        angle = degree;
         tankTowerPrefab.transform.transform.localRotation = Quaternion.Euler(degree, 0, 0);
     }
 
-    public void ResetToFullHealth()
+    public void SetHealth(int health)
     {
-        health = 5;
+        this.health = health;
     }
 
     public void TakeDamage(int enemyAttack)
@@ -36,20 +37,24 @@ public class Tank : MonoBehaviour
         health -= enemyAttack;
     }
 
-    public void PowerUp()
+    public void SetAttack(int attack)
     {
-        attack = 3;
+        this.attack = attack;
     }
 
     public void FireProjectile()
     { 
-        float vol = 10;
-        source = GetComponent<AudioSource>();
-        source.PlayOneShot(shootSound, vol);
+        if (!isFiring)
+        {
+            isFiring = true;
 
-        GameObject shootMissile = Instantiate(projectile, tankTowerPrefab.transform.transform.position + new Vector3(0,0.4f,0), tankTowerPrefab.transform.transform.rotation);
-        Missile missile = shootMissile.AddComponent<Missile>();
-        missile.firedBy = this;
-        shootMissile.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0,0,power * 2000));
+            float vol = 10;
+            source = GetComponent<AudioSource>();
+            source.PlayOneShot(shootSound, vol);
+
+            GameObject shootMissile = Instantiate(projectile, tankTowerPrefab.transform.transform.position + new Vector3(0, 0.4f, 0), tankTowerPrefab.transform.transform.rotation);
+            shootMissile.GetComponent<Missile>().firedBy = this;
+            shootMissile.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, power * 2000));
+        }
     }
 }

@@ -26,8 +26,6 @@ public class GameController : MonoBehaviour
     public AudioClip gameOverSound;
     private AudioSource source;
 
-    private bool firing = false;
-
     public static string winner;
 
     void Start()
@@ -53,8 +51,8 @@ public class GameController : MonoBehaviour
         activeTankIndex = 0;
 
         //UI hook up
-        tankleft.name = "Player Left";
-        tankRight.name = "Player Right";
+        tankleft.name = "Blue";
+        tankRight.name = "Green";
         fireButton.onClick.AddListener(Fire);
     }
 
@@ -70,26 +68,21 @@ public class GameController : MonoBehaviour
 
     void Fire()
     {
-        if (!firing)
-        {
-            firing = true;
+        tankList[activeTankIndex].angle = angleSlider.value;
+        tankList[activeTankIndex].power = powerSlider.value;
 
-            Debug.Log("Fire");
-            Debug.Log("Angle: " + angleSlider.value);
-            Debug.Log("Power: " + powerSlider.value);
+        Debug.Log("Fire");
+        Debug.Log("Angle: " + angleSlider.value);
+        Debug.Log("Power: " + powerSlider.value);
 
-            tankList[activeTankIndex].angle = angleSlider.value;
-            tankList[activeTankIndex].power = powerSlider.value;
-
-            tankList[activeTankIndex].FireProjectile();
-        }
+        tankList[activeTankIndex].FireProjectile();
     }
 
     public void EndTurn()
     {
-        firing = false;
         activeTankIndex = (activeTankIndex + 1) % 2;
         Debug.Log("Current Player: " + tankList[activeTankIndex].name);
+
         angleSlider.value = tankList[activeTankIndex].angle;
         powerSlider.value = tankList[activeTankIndex].power;
     }
@@ -99,24 +92,23 @@ public class GameController : MonoBehaviour
         //Generate platform for tanks with random heights
         platformLeft.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
         platformRight.transform.localScale += new Vector3(0, Random.Range(0, 3), 0);
-        Debug.Log(platformLeft.transform.localScale.y);
-        Debug.Log(platformRight.transform.localScale.y);
+        Debug.Log("Platform Left Height: " + platformLeft.transform.localScale.y);
+        Debug.Log("Platform Right Height: " + platformRight.transform.localScale.y);
+
         tankleft.transform.position = new Vector3(-38, platformLeft.transform.localScale.y*2+0.8f, 0);
         tankleft.GetComponent<Rigidbody>().isKinematic = true;
         tankleft.GetComponent<Rigidbody>().drag = 1000;
+
         tankRight.transform.position = new Vector3(38, platformRight.transform.localScale.y*2+0.8f, 0);
         tankRight.GetComponent<Rigidbody>().isKinematic = true;
         tankRight.GetComponent<Rigidbody>().drag = 1000;
+
         //Generate destrutable 'terrain' made of cubes randomly
         for (int i = -35; i < 35; i++)
         {
             for (int j = 0; j < Random.Range(0, 30); j++)
             {
                 GameObject terrainCube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                Rigidbody terrainCubeRb = terrainCube.AddComponent<Rigidbody>();
-                terrainCubeRb.drag = 1000;
-                terrainCubeRb.isKinematic = true;
-                BoxCollider terrainCubeCollider = terrainCube.AddComponent<BoxCollider>();
                 terrainCube.tag = "terrain";
                 terrainCube.transform.position = new Vector3(i, j, 0);
                 terrainCube.GetComponent<Renderer>().material.color = Color.red;

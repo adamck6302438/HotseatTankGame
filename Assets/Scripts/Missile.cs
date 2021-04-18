@@ -15,6 +15,8 @@ public class Missile : MonoBehaviour
     //Add to bullet script
     void OnCollisionEnter(Collision col)
     {
+        Debug.Log("Collision Enter: " + name + " with " + col.gameObject.tag);
+
         GameController gameCtrl = GameObject.Find("GameController").GetComponent<GameController>();
 
         switch (col.gameObject.tag)
@@ -24,17 +26,26 @@ public class Missile : MonoBehaviour
                 break;
             case "AtkPwrUp":
                 Destroy(col.gameObject);
-                firedBy.PowerUp();
+                firedBy.SetAttack(3);
                 break;
             case "HpPwrUp":
                 Destroy(col.gameObject);
-                firedBy.ResetToFullHealth();
+                firedBy.SetHealth(5);
                 break;
             case "tank":
                 col.gameObject.GetComponent<Tank>().TakeDamage(firedBy.attack);
                 break;
+            default:
+                break;
         }
 
+        // reset attack power up after one turn
+        if (firedBy.attack > 1 && !col.gameObject.CompareTag("HpPwrUp"))
+        {
+            firedBy.SetAttack(1);
+        }
+
+        firedBy.isFiring = false;
         gameCtrl.EndTurn();
         Destroy(gameObject);
     }

@@ -7,6 +7,10 @@ TagManager:
   - terrain
   - tank
   - floor
+  - Fire
+  - AtkPwrUp
+  - HpPwrUp
+  - powerup
   layers:
   - Default
   - TransparentFX

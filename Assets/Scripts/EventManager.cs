@@ -6,7 +6,5 @@ using System.Collections.Generic;
 public class EventManager : MonoBehaviour
 {
     public delegate void ClickAction();
-    public static event ClickAction OnClicked;
-
-
+    //public static event ClickAction OnClicked;
 }
