@@ -8,6 +8,11 @@ public class Powerup : MonoBehaviour
     public int powerId; //id of the powerup, used to determine whether it is a health or damage powerup
     int powerVal; //the value of the powerup's increase
 
+    private void Start()
+    {
+        this.transform.position = new Vector3(Random.RandomRange(-38,38), Random.RandomRange(15,20), 0);
+    }
+
     // Update is called once per frame
     void Update()
     {
