@@ -20,7 +20,7 @@ public class Missile : MonoBehaviour
                 Destroy(this.gameObject);
                 break;
             case "floor":
-                Destroy(gameObject);
+                Destroy(this.gameObject);
                 break;
             case "tank":
                 col.gameObject.GetComponent<Tank>().health--;
