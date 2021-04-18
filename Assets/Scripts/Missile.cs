@@ -22,11 +22,11 @@ public class Missile : MonoBehaviour
             case "terrain":
                 Destroy(col.gameObject);
                 break;
-            case "attackBoost":
+            case "AtkPwrUp":
                 Destroy(col.gameObject);
                 firedBy.PowerUp();
                 break;
-            case "healthBoost":
+            case "HpPwrUp":
                 Destroy(col.gameObject);
                 firedBy.ResetToFullHealth();
                 break;
