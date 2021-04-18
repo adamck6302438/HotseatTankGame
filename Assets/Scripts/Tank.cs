@@ -20,16 +20,6 @@ public class Tank : MonoBehaviour
         health = 5;
     }
 
-    public void MoveLeft()
-    {
-        this.transform.position -= new Vector3(1f, 0, 0);
-    }
-
-    public void MoveRight()
-    {
-        this.transform.position += new Vector3(1f, 0, 0);
-    }
-
     public void AdjustTowerAngle(float degree)
     {
         angle = degree;

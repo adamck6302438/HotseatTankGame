@@ -33,6 +33,9 @@ public class Missile : MonoBehaviour
             case "tank":
                 col.gameObject.GetComponent<Tank>().TakeDamage(firedBy.attack);
                 break;
+            case "powerup":
+
+                break;
         }
 
         gameCtrl.EndTurn();
