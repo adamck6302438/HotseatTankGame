@@ -7,7 +7,7 @@ public class HealthBar : MonoBehaviour
     //Fields
     public string tankColour; //colour of tank below healthBar
     float healthSize; //size of healthBar 
-    public GameObject tank; //GameObject of tank below the health bar
+    GameObject tank; //GameObject of tank below the health bar
 
     // Start is called before the first frame update
     void Start()
